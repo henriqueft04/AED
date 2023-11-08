@@ -73,10 +73,10 @@ static void append(PersonSet *ps, Person *p) {
   // it uses realloc to double the array capacity!
   if(ps->size == ps->capacity){
     ps->capacity*=2;
-    ps->array = realloc(ps->array
+    ps->array = realloc(ps->array, sizeof(Person *)* ps->capacity);
   }
   // COMPLETE ...
-  
+
 
   ps->array[ps->size] = p;
   ps->size++;
