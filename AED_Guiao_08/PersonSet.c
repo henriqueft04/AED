@@ -61,7 +61,11 @@ void PersonSetPrint(const PersonSet *ps) {
 // (INTERNAL function.)
 static int search(const PersonSet *ps, int id) {
   // COMPLETE ...
-
+  for (int i = 0; i < ps->size; i++){
+    if(ps->array[i]->id == id){
+      return i;
+    }
+  }
   return -1;
 }
 
@@ -88,6 +92,11 @@ void PersonSetAdd(PersonSet *ps, Person *p) {
   // You may call the append function here!
 
   // COMPLETE ...
+  int id = p->id;
+  if( !(search(ps, p->id))){
+    append(ps, p);
+  }
+
 }
 
 // Pop one person out of *ps.
@@ -96,6 +105,8 @@ Person *PersonSetPop(PersonSet *ps) {
   // It is easiest to pop and return the person in the last position!
 
   // COMPLETE ...
+  ps->size--;
+  realloc(ps->array, sizeof(Person *)* ps->size);
 
   return NULL;
 }
@@ -106,6 +117,14 @@ Person *PersonSetRemove(PersonSet *ps, int id) {
   // You may call search here!
 
   // COMPLETE ...
+  int found = search(ps, id);
+  //shift
+
+  for (int i = found; i < ps->size; i++){
+    ps->array[i] = ps->array[i+1];
+  }
+  ps->size--;
+  realloc(ps->array, sizeof(Person *)* ps->size);
 
   return NULL;
 }
@@ -116,6 +135,11 @@ Person *PersonSetGet(const PersonSet *ps, int id) {
   // You may call search here!
 
   // COMPLETE ...
+  for(int i = ps->size; i < ps->size; i++){
+    if(ps->array[i]->id == id){
+      return ps->array[i];
+    }
+  }
 
   return NULL;
 }
